@@ -12,6 +12,11 @@ module.exports = {
   ],
   ignorePatterns: ['dist', '.eslintrc.cjs'],
   parser: '@typescript-eslint/parser',
+  parserOptions: {
+    ecmaFeatures: { jsx: true },
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+  },
   plugins: ['react-refresh', 'react', 'react-hooks', 'jsx-a11y', 'prettier'],
   rules: {
     'react-refresh/only-export-components': [
@@ -26,5 +31,8 @@ module.exports = {
     'react/no-array-index-key': 'error',
     'prettier/prettier': 'error',
     quotes: ['error', 'single', { allowTemplateLiterals: true }],
+  },
+  settings: {
+    react: { version: 'detect' }, // for react version warnning
   },
 };
