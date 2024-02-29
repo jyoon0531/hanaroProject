@@ -11,6 +11,7 @@ type SessionContextProps = {
   session: Session;
   login: (id: number) => boolean;
   logout: () => void;
+  setUsername: (username: string) => void;
 };
 
 type ProviderProps = {
@@ -20,11 +21,13 @@ type ProviderProps = {
 type Action =
   | { type: 'set'; payload: Session }
   | { type: 'login'; payload: LoginUser }
-  | { type: 'logout'; payload: null };
+  | { type: 'logout'; payload: null }
+  | { type: 'setUsername'; payload: string };
 
 const SKEY = 'session';
 const DefaultSession: Session = {
   loginUser: null,
+  username: '',
 };
 
 function getStorage() {
@@ -43,9 +46,10 @@ function setStorage(session: Session) {
 }
 
 const SessionContext = createContext<SessionContextProps>({
-  session: { loginUser: null },
+  session: { loginUser: null, username: '' },
   login: () => false,
   logout: () => {},
+  setUsername: () => {},
 });
 
 const reducer = (session: Session, { type, payload }: Action) => {
@@ -55,8 +59,13 @@ const reducer = (session: Session, { type, payload }: Action) => {
       newer = { ...payload };
       break;
     case 'login':
+      newer = { ...session, loginUser: payload };
+      break;
     case 'logout':
       newer = { ...session, loginUser: payload };
+      break;
+    case 'setUsername':
+      newer = { ...session, username: payload };
       break;
     default:
       return session;
@@ -80,13 +89,17 @@ export const SessionProvider = ({ children }: ProviderProps) => {
     () => dispatch({ type: 'logout', payload: null }),
     []
   );
+  const setUsername = useCallback(
+    (username: string) => dispatch({ type: 'setUsername', payload: username }),
+    []
+  );
 
   useEffect(() => {
     setSession(getStorage());
   }, []);
 
   return (
-    <SessionContext.Provider value={{ login, logout, session }}>
+    <SessionContext.Provider value={{ login, logout, session, setUsername }}>
       {children}
     </SessionContext.Provider>
   );
