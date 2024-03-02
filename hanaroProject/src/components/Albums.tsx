@@ -18,20 +18,18 @@ const Albums = () => {
     dependencies: [loginUser?.id],
     defaultData: albums,
   });
-  const { album, setSelectedAlbumId } = useAlbum();
+  const { album, setSelectedAlbumId, setSelectedAlbumTitle } = useAlbum();
   // const [selectedAlbumId, setSelectedAlbumId] = useState<number | null>(null);
   const [searchParams, setSearchParams] = useSearchParams({ albumId: '' });
 
-  const selectAlbum = (id: number) => {
+  const selectAlbum = (id: number, title: string) => {
     setSelectedAlbumId(id);
+    setSelectedAlbumTitle(title);
     setSearchParams({ albumId: id.toString() });
   };
 
   const goToAlbumDetail = (id: number) => {
     navigate('/photos');
-    // setSearchParams({ albumId: id.toString() });
-    console.log('🚀 ~ gotodetail ~ id:', id);
-    console.log(searchParams.get('albumId'));
   };
 
   useEffect(() => {
@@ -42,17 +40,18 @@ const Albums = () => {
 
   return (
     <>
-      <div className='flex'>
+      <div className='flex justify-center p-3'>
         <div className='text-lg font-bold'>앨범 목록</div>
+      </div>
+      <div className='flex justify-end p-1'>
         <button
           className='btn-default'
           onClick={() => goToAlbumDetail(album.id!)}
         >
           앨범 상세 보기
         </button>
-        {loginUser?.id}
       </div>
-      <div className='flex'>
+      <div className='flex-col'>
         {albums.map((item) => (
           <Album
             key={item.id}

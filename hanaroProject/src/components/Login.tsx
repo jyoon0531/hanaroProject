@@ -59,25 +59,29 @@ const Login = () => {
 
   return (
     <>
-      <form onSubmit={makeLogin}>
-        <input
-          className='border border-gray-400 rounded-lg'
-          type='text'
-          placeholder='User ID...'
-          ref={idRef}
-        />
-        <button type='submit' className='btn-primary'>
-          Sign In
-        </button>
-      </form>
-      {!isValid && (
-        <div className='text-red-500 text-lg'>
-          User ID는 1 ~ 10번만 가능합니다.
-        </div>
-      )}
-      {!loginUser && isValid && (
-        <div className='text-lg'>User ID는 1 ~ 10번만 가능합니다.</div>
-      )}
+      <div className='flex justify-center'>
+        <form onSubmit={makeLogin}>
+          <input
+            className='border border-gray-400 rounded-lg m-4'
+            type='text'
+            placeholder='User ID...'
+            ref={idRef}
+          />
+          <button type='submit' className='btn-primary'>
+            Sign In
+          </button>
+        </form>
+      </div>
+      <div className='flex justify-center'>
+        {!isValid && (
+          <div className='text-red-500 text-lg'>
+            User ID는 1 ~ 10번만 가능합니다.
+          </div>
+        )}
+        {!loginUser && isValid && (
+          <div className='text-lg'>User ID는 1 ~ 10번만 가능합니다.</div>
+        )}
+      </div>
     </>
   );
 };

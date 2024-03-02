@@ -15,9 +15,11 @@ const Profile = () => {
 
   return (
     <>
-      <div>
-        <div className='text-lg'>{username}</div>
-        <button onClick={goToHome}>Sign Out</button>
+      <div className='w-1/5 flex justify-evenly'>
+        <div className='text-lg text-white'>{username}</div>
+        <button className='btn-default' onClick={goToHome}>
+          Sign Out
+        </button>
       </div>
     </>
   );

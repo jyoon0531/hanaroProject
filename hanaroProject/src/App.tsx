@@ -15,16 +15,18 @@ function App() {
 
   return (
     <>
-      <SessionProvider>
-        <Home />
-        <AlbumCotextProvider>
-          <Routes>
-            <Route path='/' element={<Login />} />
-            <Route path='/albums' element={<Albums />} />
-            <Route path='/photos' element={<AlbumDetail />} />
-          </Routes>
-        </AlbumCotextProvider>
-      </SessionProvider>
+      <div className='contianer'>
+        <SessionProvider>
+          <Home />
+          <AlbumCotextProvider>
+            <Routes>
+              <Route path='/' element={<Login />} />
+              <Route path='/albums' element={<Albums />} />
+              <Route path='/photos' element={<AlbumDetail />} />
+            </Routes>
+          </AlbumCotextProvider>
+        </SessionProvider>
+      </div>
     </>
   );
 }
