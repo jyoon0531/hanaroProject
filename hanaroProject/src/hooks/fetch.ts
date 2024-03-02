@@ -28,7 +28,6 @@ export const useFetch = <T>({
       setLoading(true);
       setError('');
       try {
-        console.log('ffffffffffffffffffffff');
         const res = await fetch(url, options);
         if (!res.ok) {
           setError(res.status.toString());
@@ -39,7 +38,6 @@ export const useFetch = <T>({
         setData(data);
       } catch (err) {
         if (err instanceof Error) {
-          // console.log('🚀  err:', err.name, typeof err);
           if (err.name !== 'AbortError') setError(err.message);
         }
       } finally {

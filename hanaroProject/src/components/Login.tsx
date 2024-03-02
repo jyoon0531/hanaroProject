@@ -21,16 +21,12 @@ const Login = () => {
     const id = Number(idRef.current?.value);
 
     if (id > 10 || id < 0) {
-      // setValid((prev) => !prev);
       setValid(false);
       return;
     }
-    // login(id);
     if (login(id)) {
-      // setValid((prev) => !prev);
       setValid(true);
       navigate('/albums');
-      console.log('🚀 ~ Login ~ id:', id);
     }
     if (idRef.current?.value) idRef.current.value = '';
   };
@@ -45,7 +41,6 @@ const Login = () => {
           signal,
         });
         const data = await res.json();
-        console.log('🚀 ~ data:', data.username);
         setUsername(data.username);
       } catch (err) {
         if (err instanceof Error) {
