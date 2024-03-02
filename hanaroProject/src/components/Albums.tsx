@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
-import { useSession } from '../contexts/session-contexts';
+import { useSession } from '../contexts/session-context';
 import { useFetch } from '../hooks/fetch';
-import Album from './Album';
-// import Album from './Album';
+import Album, { AlbumsType } from './Album';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useAlbum } from '../contexts/album-context';
 
 const BASE_URL = 'https://jsonplaceholder.typicode.com';
 
-type AlbumsType = { userId: number; id: number; title: string };
-
 const Albums = () => {
+  const navigate = useNavigate();
   const {
     session: { loginUser },
   } = useSession();
@@ -18,24 +18,48 @@ const Albums = () => {
     dependencies: [loginUser?.id],
     defaultData: albums,
   });
+  const { album, setSelectedAlbumId } = useAlbum();
+  // const [selectedAlbumId, setSelectedAlbumId] = useState<number | null>(null);
+  const [searchParams, setSearchParams] = useSearchParams({ albumId: '' });
+
+  const selectAlbum = (id: number) => {
+    setSelectedAlbumId(id);
+    setSearchParams({ albumId: id.toString() });
+  };
+
+  const goToAlbumDetail = (id: number) => {
+    navigate('/photos');
+    // setSearchParams({ albumId: id.toString() });
+    console.log('🚀 ~ gotodetail ~ id:', id);
+    console.log(searchParams.get('albumId'));
+  };
 
   useEffect(() => {
     if (data) {
       setAlbums(data);
     }
-    console.log('🚀 ~ Albums ~ data:', data);
   }, [data]);
 
   return (
     <>
       <div className='flex'>
         <div className='text-lg font-bold'>앨범 목록</div>
-        <button className='btn-default'>앨범 상세 보기</button>
+        <button
+          className='btn-default'
+          onClick={() => goToAlbumDetail(album.id!)}
+        >
+          앨범 상세 보기
+        </button>
         {loginUser?.id}
       </div>
-      <div>
-        {albums.map((album) => (
-          <Album key={album.id} albumData={album} />
+      <div className='flex'>
+        {albums.map((item) => (
+          <Album
+            key={item.id}
+            albumData={item}
+            isSelected={item.id === album.id}
+            onSelect={selectAlbum}
+          />
         ))}
       </div>
     </>

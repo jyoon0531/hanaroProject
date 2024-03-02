@@ -1,4 +1,4 @@
-import { useSession } from '../contexts/session-contexts';
+import { useSession } from '../contexts/session-context';
 import Profile from './Profile';
 
 const Home = () => {

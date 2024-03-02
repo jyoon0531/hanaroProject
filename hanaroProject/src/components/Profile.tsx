@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { useSession } from '../contexts/session-contexts';
+import { useSession } from '../contexts/session-context';
 
 const Profile = () => {
   const {

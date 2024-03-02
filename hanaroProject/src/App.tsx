@@ -4,9 +4,11 @@
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import Login from './components/Login';
-import { SessionProvider } from './contexts/session-contexts';
+import { SessionProvider } from './contexts/session-context';
 import Home from './components/Home';
 import Albums from './components/Albums';
+import AlbumDetail from './components/AlbumDetail';
+import { AlbumCotextProvider } from './contexts/album-context';
 
 function App() {
   // const [count, setCount] = useState(0);
@@ -15,10 +17,13 @@ function App() {
     <>
       <SessionProvider>
         <Home />
-        <Routes>
-          <Route path='/' element={<Login />} />
-          <Route path='/albums' element={<Albums />} />
-        </Routes>
+        <AlbumCotextProvider>
+          <Routes>
+            <Route path='/' element={<Login />} />
+            <Route path='/albums' element={<Albums />} />
+            <Route path='/photos' element={<AlbumDetail />} />
+          </Routes>
+        </AlbumCotextProvider>
       </SessionProvider>
     </>
   );
